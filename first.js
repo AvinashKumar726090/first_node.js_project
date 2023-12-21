@@ -30,26 +30,26 @@ const server = http.createServer((req, res) => {
         return res.end();
     }
 
-    // if (path === '/message' && method === 'POST') {
-    //     let body = '';
-    //     req.on('data', chunk => {
-    //         body += chunk.toString(); // Collect the incoming data
-    //     });
-    //     req.on('end', () => {
-    //         const parsedData = querystring.parse(body); // Parse the form data
-    //         const message = parsedData.message; // Extract the 'message' field
-    //         console.log(message); // Log the message to the console
-    //         previousMessage = message; // Store the message for display
+    if (path === '/message' && method === 'POST') {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString(); // Collect the incoming data
+        });
+        req.on('end', () => {
+            const parsedData = querystring.parse(body); // Parse the form data
+            const message = parsedData.message; // Extract the 'message' field
+            console.log(message); // Log the message to the console
+            previousMessage = message; // Store the message for display
 
-    //         // Redirect to the root after form submission
-    //         res.writeHead(302, { 'Location': '/' });
-    //         return res.end();
-    //     });
-    // } else {
-    //     res.writeHead(404, { 'Content-Type': 'text/html' });
-    //     res.write('<html><body><h1>404 - Not Found</h1></body></html>');
-    //     res.end();
-    // }
+            // Redirect to the root after form submission
+            res.writeHead(302, { 'Location': '/' });
+            return res.end();
+        });
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.write('<html><body><h1>404 - Not Found</h1></body></html>');
+        res.end();
+    }
 });
 
 server.listen(port, hostname, () => {
